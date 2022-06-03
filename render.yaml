@@ -1,8 +1,12 @@
+previewsEnabled: true
+previewsExpireAfterDays: 3
+
 databases:
   - name: rails-render-demo
     databaseName: rails_render_demo
     user: rails_render_demo
     plan: free
+    previewPlan: starter
     region: singapore
     postgresMajorVersion: 14
 
@@ -11,9 +15,11 @@ services:
     name: rails-render-demo
     env: ruby
     plan: starter
+    previewPlan: starter
     region: singapore
     buildCommand: './bin/render-build.sh'
     startCommand: 'bundle exec puma -C config/puma.rb'
+    initialDeployHook: './bin/render-initial-deploy.sh'
     envVars:
       - key: DATABASE_URL
         fromDatabase:
