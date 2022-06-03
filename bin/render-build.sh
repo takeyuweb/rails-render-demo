@@ -6,8 +6,10 @@ printenv
 
 echo "copying .env"
 if [ $IS_PULL_REQUEST = "true" ]; then
+  echo "cp /etc/secrets/.env.preview .env"
   cp /etc/secrets/.env.preview .env
 else
+  echo "cp /etc/secrets/.env.production .env"
   cp /etc/secrets/.env.production .env
 fi
 
