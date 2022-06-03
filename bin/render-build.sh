@@ -2,6 +2,8 @@
 
 set -o errexit
 
+printenv
+
 echo "copying .env"
 if [ $IS_PULL_REQUEST = "true" ]; then
   cp /etc/secrets/.env.preview .env
