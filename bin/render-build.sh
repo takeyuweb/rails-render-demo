@@ -2,6 +2,8 @@
 
 set -o errexit
 
+ls -al
+
 echo "copying .env"
 if [ $IS_PULL_REQUEST = "true" ]; then
   ls -al /etc/secrets/.env.preview
