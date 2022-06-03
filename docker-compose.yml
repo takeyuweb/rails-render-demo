@@ -1,0 +1,49 @@
+version: "3"
+volumes:
+  pg_data:
+    driver: local
+services:
+  pg:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  base: &base
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile.dev
+      args:
+        - DIR=/rails-render-demo
+    tmpfs:
+      - /tmp
+
+  app:
+    <<: *base
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/rails-render-demo
+    user: ${ARG_USER:-ruby}
+    command: >
+      /bin/sh -c "rm -f tmp/pids/server.pid && bundle install --without production && bin/rails s -b 0.0.0.0"
+    ports:
+      - 3000:3000
+    environment:
+      BUNDLE_PATH: ${BUNDLE_PATH:-/rails-render-demo/vendor/bundle}
+      DB_HOST: pg
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      DB_PORT: 5432
+    depends_on:
+      - pg
+
+  wait-middleware: &wait-middleware
+    <<: *base
+    environment:
+      WAIT_HOSTS: pg:5432
+    depends_on:
+      - pg
+    command: /wait

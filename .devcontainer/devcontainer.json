@@ -1,0 +1,22 @@
+{
+  "name": "rails-render-demo",
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "docker-compose.yml"
+  ],
+  "service": "app",
+  "workspaceFolder": "/rails-render-demo",
+  "extensions": [
+    "esbenp.prettier-vscode"
+  ],
+  "settings": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[ruby]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+  }
+}
